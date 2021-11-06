@@ -3,6 +3,8 @@ import { EntityRepository, Repository } from 'typeorm';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { Account } from './entities/account.entity';
 
+export type EnableOrDisableType = 'enable' | 'disable';
+
 @EntityRepository(Account)
 export class AccountsRepository extends Repository<Account> {
   async createAccount(account: CreateAccountDto) {
@@ -23,27 +25,37 @@ export class AccountsRepository extends Repository<Account> {
     return accountCreated;
   }
 
-  async activate(id: number) {
-    const found = await this.findOne(id);
+  async enableOrDisable(id: number, type: EnableOrDisableType) {
+    const found = await this.findOne(id, {
+      withDeleted: true,
+    });
 
-    if (found) {
+    if (!found) {
       throw new HttpException('Account does not exist', HttpStatus.NOT_FOUND);
     }
 
-    return this.update(id, {
-      disabled_at: null,
-    });
-  }
-
-  async deactivate(id: number) {
-    const found = await this.findOne(id);
-
-    if (found) {
-      throw new HttpException('Account does not exist', HttpStatus.NOT_FOUND);
+    if (type === 'enable' && !found.disabled_at) {
+      throw new HttpException(
+        'Account is already active',
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
-    return this.update(id, {
-      disabled_at: new Date().toLocaleString('pt-BR'),
-    });
+    if (type === 'disable' && found.disabled_at) {
+      throw new HttpException(
+        'Account is already disabled',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    const accountToSave = this.create(
+      Object.assign(found, {
+        disabled_at: type === 'enable' ? null : new Date(),
+      }),
+    );
+
+    await this.save(accountToSave);
+
+    return accountToSave;
   }
 }

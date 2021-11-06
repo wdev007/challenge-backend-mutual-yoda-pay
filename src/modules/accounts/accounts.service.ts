@@ -24,11 +24,11 @@ export class AccountsService {
     return this.accountRepository.update(id, updateAccountDto);
   }
 
-  activate(id: number) {
-    return this.accountRepository.activate(id);
+  enable(id: number) {
+    return this.accountRepository.enableOrDisable(id, 'enable');
   }
 
-  deactivate(id: number) {
-    return this.accountRepository.softDelete(id);
+  disable(id: number) {
+    return this.accountRepository.enableOrDisable(id, 'disable');
   }
 }

@@ -10,11 +10,13 @@ import {
   Query,
   ParseBoolPipe,
 } from '@nestjs/common';
+import { ApiQuery, ApiTags } from '@nestjs/swagger';
 import { AccountsService } from './accounts.service';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
 
 @Controller('accounts')
+@ApiTags('Accounts')
 export class AccountsController {
   constructor(private readonly accountsService: AccountsService) {}
 
@@ -25,6 +27,7 @@ export class AccountsController {
   }
 
   @Get()
+  @ApiQuery({ name: 'all', type: 'boolean' })
   findAll(@Query('all', ParseBoolPipe) all) {
     return this.accountsService.findAll({ all });
   }
@@ -34,13 +37,15 @@ export class AccountsController {
     return this.accountsService.update(+id, updateAccountDto);
   }
 
-  @Post(':id')
-  activate(@Param('id') id: string) {
-    return this.accountsService.activate(+id);
+  @HttpCode(201)
+  @Post('enable/:id')
+  enable(@Param('id') id: string) {
+    return this.accountsService.enable(+id);
   }
 
-  @Delete(':id')
-  deactivate(@Param('id') id: string) {
-    return this.accountsService.deactivate(+id);
+  @HttpCode(204)
+  @Delete('disable/:id')
+  disable(@Param('id') id: string) {
+    return this.accountsService.disable(+id);
   }
 }
