@@ -4,10 +4,10 @@ WORKDIR /app
 
 COPY ./package.json ./package-lock.json /app/
 
-RUN npm install
+RUN npm install --no-cache
 
 COPY . /app/
 
-EXPOSE 3000
+EXPOSE ${APP_PORT}
 
 CMD ["npm", "run", "start:dev"]
