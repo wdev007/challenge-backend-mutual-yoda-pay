@@ -7,7 +7,7 @@ dotenv.config({ path: CONFIG_PATH });
 
 const MIGRATIONS_PATH: string = path.resolve(
   process.cwd(),
-  `src/database/migrations`,
+  `src/shared/database/migrations`,
 );
 
 export default {

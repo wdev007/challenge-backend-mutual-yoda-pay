@@ -6,7 +6,7 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { HttpExceptionFilter } from './http-exception.filter';
+import { HttpExceptionFilter } from './shared/filters/http-exception/http-exception.filter';
 
 async function bootstrap() {
   const logger = new Logger();

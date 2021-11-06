@@ -3,7 +3,7 @@ import * as path from 'path';
 
 import { ConfigService } from '@nestjs/config';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
-import { Account } from 'src/accounts/entities/account.entity';
+import { Account } from 'src/modules/accounts/entities/account.entity';
 
 const CONFIG_PATH: string = path.resolve(process.cwd(), '.env');
 
