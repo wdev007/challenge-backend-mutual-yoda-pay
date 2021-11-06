@@ -1,13 +1,23 @@
-import { Logger } from '@nestjs/common';
+import {
+  ClassSerializerInterceptor,
+  Logger,
+  ValidationPipe,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { HttpExceptionFilter } from './http-exception.filter';
 
 async function bootstrap() {
   const logger = new Logger();
 
   const app = await NestFactory.create(AppModule);
+
   app.enableCors();
+  app.useGlobalFilters(new HttpExceptionFilter());
+
+  app.useGlobalPipes(new ValidationPipe({ errorHttpStatusCode: 422 }));
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
   const configService: ConfigService = app.get(ConfigService);
 

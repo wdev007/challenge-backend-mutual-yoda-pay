@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  HttpCode,
 } from '@nestjs/common';
 import { AccountsService } from './accounts.service';
 import { CreateAccountDto } from './dto/create-account.dto';
@@ -15,6 +16,7 @@ import { UpdateAccountDto } from './dto/update-account.dto';
 export class AccountsController {
   constructor(private readonly accountsService: AccountsService) {}
 
+  @HttpCode(201)
   @Post()
   create(@Body() createAccountDto: CreateAccountDto) {
     return this.accountsService.create(createAccountDto);
@@ -25,18 +27,18 @@ export class AccountsController {
     return this.accountsService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.accountsService.findOne(+id);
-  }
-
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateAccountDto: UpdateAccountDto) {
     return this.accountsService.update(+id, updateAccountDto);
   }
 
+  @Post(':id')
+  activate(@Param('id') id: string) {
+    return this.accountsService.activate(+id);
+  }
+
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.accountsService.remove(+id);
+  deactivate(@Param('id') id: string) {
+    return this.accountsService.deactivate(+id);
   }
 }

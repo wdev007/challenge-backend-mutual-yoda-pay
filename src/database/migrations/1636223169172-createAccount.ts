@@ -32,6 +32,11 @@ export class createAccount1636223169172 implements MigrationInterface {
             length: '15',
           },
           {
+            name: 'password',
+            type: 'varchar',
+            length: '20',
+          },
+          {
             name: 'address',
             type: 'varchar',
             length: '30',

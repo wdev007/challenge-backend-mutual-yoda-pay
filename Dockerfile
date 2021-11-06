@@ -1,13 +1,15 @@
-FROM node:latest
+FROM node:12-alpine3.10
+
+# RUN npm install -g yarn
 
 WORKDIR /app
 
-COPY ./package.json ./package-lock.json /app/
+COPY ./package.json /app/
 
-RUN npm install --no-cache
+RUN ["yarn", "install"]
 
 COPY . /app/
 
 EXPOSE ${APP_PORT}
 
-CMD ["npm", "run", "start:dev"]
+CMD ["yarn", "start:debug"]

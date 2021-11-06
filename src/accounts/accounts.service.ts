@@ -8,22 +8,24 @@ export class AccountsService {
   constructor(private readonly accountRepository: AccountsRepository) {}
 
   create(createAccountDto: CreateAccountDto) {
-    return this.accountRepository.save(createAccountDto);
+    return this.accountRepository.createAccount(createAccountDto);
   }
 
   findAll() {
-    return this.accountRepository.find();
-  }
-
-  findOne(id: number) {
-    return this.accountRepository.findOne(id);
+    return this.accountRepository.find({
+      withDeleted: true,
+    });
   }
 
   update(id: number, updateAccountDto: UpdateAccountDto) {
     return this.accountRepository.update(id, updateAccountDto);
   }
 
-  remove(id: number) {
-    return this.accountRepository.delete(id);
+  activate(id: number) {
+    return this.accountRepository.activate(id);
+  }
+
+  deactivate(id: number) {
+    return this.accountRepository.softDelete(id);
   }
 }
