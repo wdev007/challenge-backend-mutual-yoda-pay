@@ -7,6 +7,8 @@ import {
   Param,
   Delete,
   HttpCode,
+  Query,
+  ParseBoolPipe,
 } from '@nestjs/common';
 import { AccountsService } from './accounts.service';
 import { CreateAccountDto } from './dto/create-account.dto';
@@ -23,8 +25,8 @@ export class AccountsController {
   }
 
   @Get()
-  findAll() {
-    return this.accountsService.findAll();
+  findAll(@Query('all', ParseBoolPipe) all) {
+    return this.accountsService.findAll({ all });
   }
 
   @Patch(':id')
