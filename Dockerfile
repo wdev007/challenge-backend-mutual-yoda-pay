@@ -1,23 +1,3 @@
-# FROM node:12-alpine3.10
-
-# # RUN npm install -g yarn
-
-# WORKDIR /app
-
-# COPY ./package.json /app/
-
-# RUN npm i -g @nestjs/cli
-
-# RUN npm i
-
-# # RUN npm run typeorm migration:run
-
-# COPY . /app/
-
-# EXPOSE ${APP_PORT}
-
-# CMD ["yarn", "start:dev"]
-
 FROM node:latest AS development
 
 WORKDIR /usr/src/app
