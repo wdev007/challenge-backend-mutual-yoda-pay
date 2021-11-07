@@ -6,28 +6,53 @@ services:
     restart: always
     env_file:
       - .env
+    networks:
+      - yoda-pay-api-network
     container_name: yoda-pay-api-db
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
-    volumes:
-      - ./pgdata:/var/lib/postgresql/data
+    # volumes:
+    #   - ./pgdata:/var/lib/postgresql/data
   api:
+    container_name: yoda-pay-api
+    image: yoda-pay-api:1.0.0
     build:
       context: .
+      target: development
       dockerfile: ./Dockerfile
-    image: yoda-pay-api:latest
-    env_file:
-      - .env
+    command: npm run start:debug
     ports:
       - ${APP_PORT}:${APP_PORT}
-    container_name: yoda-pay-api
+    networks:
+      - yoda-pay-api-network
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
     depends_on:
       - db
-    volumes:
-      - .:/app
-      # - nodemodules:/app/node_modules
-volumes:
-  pgdata:
+    restart: unless-stopped
+    env_file:
+      - .env
+  # api:
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile
+  #   image: yoda-pay-api:latest
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - ${APP_PORT}:${APP_PORT}
+  #   container_name: yoda-pay-api
+  #   depends_on:
+  #     - db
+  #   volumes:
+  #     - .:/app
+
+      
+# volumes:
+#   pgdata:
   # nodemodules:
+networks:
+  yoda-pay-api-network:
