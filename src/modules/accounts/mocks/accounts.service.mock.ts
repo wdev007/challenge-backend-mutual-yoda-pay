@@ -1,7 +1,6 @@
-import { CreateAccountDto } from '../dto/create-account.dto';
-import { UpdateAccountDto } from '../dto/update-account.dto';
+import { CreateAccountDto, UpdateAccountDto } from '../dto';
+import { PageDto, PageMetaDto, PageOptionsDto } from '../../../shared/dtos';
 import { Account } from '../entities/account.entity';
-import { FiltersGetAccounts } from '../interfaces/filters-get-accounts';
 
 export class AccountsServiceMock {
   private accounts: Account[] = [];
@@ -24,15 +23,18 @@ export class AccountsServiceMock {
     return account;
   }
 
-  async findAll({ all }: FiltersGetAccounts) {
+  async findAll(pageOptionsDto: PageOptionsDto) {
     const accounts = this.accounts.map((item) => {
       delete item.password;
       return item;
     });
-    if (!all) {
-      return accounts.filter((item) => !Boolean(item.disabled_at));
-    }
-    return accounts;
+
+    const pageMetaDto = new PageMetaDto({
+      itemCount: this.accounts.length,
+      pageOptionsDto,
+    });
+
+    return new PageDto(accounts, pageMetaDto);
   }
 
   async update(id: number, dto: UpdateAccountDto) {

@@ -5,30 +5,16 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory, Reflector } from '@nestjs/core';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './shared/filters/http-exception/http-exception.filter';
+import { setupSwagger } from './shared/utils';
 
 async function bootstrap() {
   const logger = new Logger();
 
   const app = await NestFactory.create(AppModule);
 
-  const config = new DocumentBuilder()
-    .setTitle('Yoda Pay')
-    .setDescription('REST API for Yoda Pay')
-    .setVersion('1.0')
-    .setLicense('MIT', 'https://mit-license.org/')
-    .setContact(
-      'Wellici Araujo',
-      'https://github.com/wdev007',
-      'wja1@ifal.edu.br',
-    )
-    .build();
-
-  const document = SwaggerModule.createDocument(app, config);
-
-  SwaggerModule.setup('api', app, document);
+  setupSwagger(app);
 
   app.enableCors();
   app.useGlobalFilters(new HttpExceptionFilter());

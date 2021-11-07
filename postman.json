@@ -15,7 +15,7 @@
 					"name": "get all",
 					"request": {
 						"url": {
-							"raw": "{{base_url}}/accounts?all=true",
+							"raw": "{{base_url}}/accounts?order=ASC&page=1&take=10",
 							"host": [
 								"{{base_url}}"
 							],
@@ -24,8 +24,20 @@
 							],
 							"query": [
 								{
-									"key": "all",
-									"value": "true",
+									"key": "order",
+									"value": "ASC",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "take",
+									"value": "10",
 									"equals": true,
 									"description": ""
 								}
