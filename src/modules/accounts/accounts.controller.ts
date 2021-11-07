@@ -38,13 +38,13 @@ export class AccountsController {
   }
 
   @HttpCode(201)
-  @Post('enable/:id')
+  @Post('enables/:id')
   enable(@Param('id') id: string) {
     return this.accountsService.enable(+id);
   }
 
   @HttpCode(204)
-  @Delete('disable/:id')
+  @Delete('disables/:id')
   disable(@Param('id') id: string) {
     return this.accountsService.disable(+id);
   }

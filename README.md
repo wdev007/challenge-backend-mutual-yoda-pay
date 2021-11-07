@@ -35,30 +35,45 @@ This section should list any major frameworks/libraries used to bootstrap your p
 Instructions on setting up your project locally.
 To get a local copy up and running follow these simple example steps.
 
-### Prerequisites
+## Prerequisites
 
 List things you need to use the software and how to install them.
 
-#### Roadmap
+- ### [x] docker
+- ### [x] docker compose
 
-- [x] docker
-- [x] docker compose
+## Installation
 
-### Installation
+1 - Clone the repo
 
-1. Clone the repo
-   ```sh
-   git clone https://github.com/wdev007/challenge-backend-mutual-yoda-pay
-   ```
-2. Change the settings files
-   ```sh
-   cp .env.example .env
-   ```
+```sh
+git clone https://github.com/wdev007/challenge-backend-mutual-yoda-pay
+```
+
+2 - Change the settings files
+
+```sh
+cp .env.example .env
+```
 
 ## Usage
 
 ```sh
 docker-compose up
+```
+
+## Run migrations
+
+1 - enter the API container
+
+```sh
+docker-compose exec api sh
+```
+
+2 - run migrations
+
+```sh
+npm run typeorm migration:run
 ```
 
 ## Run unit tests

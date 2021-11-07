@@ -82,7 +82,7 @@
 				{
 					"name": "enable account",
 					"request": {
-						"url": "{{base_url}}/accounts/enable/6",
+						"url": "{{base_url}}/accounts/enables/6",
 						"method": "POST",
 						"header": [
 							{
@@ -102,7 +102,7 @@
 				{
 					"name": "disable account",
 					"request": {
-						"url": "{{base_url}}/accounts/disable/3",
+						"url": "{{base_url}}/accounts/disables/3",
 						"method": "DELETE",
 						"header": [
 							{
