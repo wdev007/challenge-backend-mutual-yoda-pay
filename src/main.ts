@@ -2,6 +2,7 @@ import {
   ClassSerializerInterceptor,
   Logger,
   ValidationPipe,
+  VersioningType,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory, Reflector } from '@nestjs/core';
@@ -14,9 +15,16 @@ async function bootstrap() {
 
   const app = await NestFactory.create(AppModule);
 
-  setupSwagger(app);
+  const configService: ConfigService = app.get(ConfigService);
+
+  const PORT = configService.get('APP_PORT');
+  const API_URL = configService.get('API_URL');
 
   app.enableCors();
+  app.enableVersioning({
+    type: VersioningType.URI,
+    defaultVersion: '1',
+  });
   app.useGlobalFilters(new HttpExceptionFilter());
 
   app.useGlobalPipes(
@@ -28,9 +36,7 @@ async function bootstrap() {
   );
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
-  const configService: ConfigService = app.get(ConfigService);
-
-  const PORT = configService.get('APP_PORT');
+  setupSwagger(app, API_URL);
 
   await app.listen(PORT);
 
