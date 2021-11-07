@@ -61,7 +61,7 @@ List things you need to use the software and how to install them.
 docker-compose up
 ```
 
-## Run tests
+## Run unit tests
 
 ```sh
 yarn run test
@@ -69,7 +69,7 @@ yarn run test
 
 ## To see the documentation
 
-- Open the address of your api in your browser, for example: localhost:3333/api
+- ### Open the address of your api in your browser, for example: localhost:3333/api
 
 - ### Swagger UI
 
