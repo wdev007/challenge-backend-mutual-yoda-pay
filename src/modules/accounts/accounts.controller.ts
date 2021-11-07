@@ -8,28 +8,34 @@ import {
   Delete,
   HttpCode,
   Query,
-  ParseBoolPipe,
+  // ParseBoolPipe,
+  HttpStatus,
 } from '@nestjs/common';
-import { ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 import { AccountsService } from './accounts.service';
 import { CreateAccountDto } from './dto/create-account.dto';
+import { PageOptionsDto } from '../../shared/dtos/page-options.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
+import { ApiPaginatedResponse } from 'src/shared/docs/api-paginated-response';
+import { AccountDto } from './dto/account.dto';
 
 @Controller('accounts')
 @ApiTags('Accounts')
 export class AccountsController {
   constructor(private readonly accountsService: AccountsService) {}
 
-  @HttpCode(201)
+  @HttpCode(HttpStatus.CREATED)
   @Post()
   create(@Body() createAccountDto: CreateAccountDto) {
     return this.accountsService.create(createAccountDto);
   }
 
   @Get()
-  @ApiQuery({ name: 'all', type: 'boolean' })
-  findAll(@Query('all', ParseBoolPipe) all) {
-    return this.accountsService.findAll({ all });
+  @HttpCode(HttpStatus.OK)
+  @ApiPaginatedResponse(AccountDto)
+  // @ApiQuery({ name: 'all', type: 'boolean' })
+  findAll(@Query() pageOptionsDto: PageOptionsDto) {
+    return this.accountsService.findAll(pageOptionsDto);
   }
 
   @Patch(':id')
@@ -37,13 +43,13 @@ export class AccountsController {
     return this.accountsService.update(+id, updateAccountDto);
   }
 
-  @HttpCode(201)
+  @HttpCode(HttpStatus.CREATED)
   @Post('enables/:id')
   enable(@Param('id') id: string) {
     return this.accountsService.enable(+id);
   }
 
-  @HttpCode(204)
+  @HttpCode(HttpStatus.NO_CONTENT)
   @Delete('disables/:id')
   disable(@Param('id') id: string) {
     return this.accountsService.disable(+id);
