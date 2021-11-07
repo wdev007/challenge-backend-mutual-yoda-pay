@@ -7,14 +7,18 @@ import {
 } from 'class-validator';
 
 export class UpdateAccountDto {
-  @ApiProperty()
+  @ApiProperty({
+    required: false,
+  })
   @IsOptional()
   @IsString()
   @IsPhoneNumber('BR')
   @MaxLength(15)
   phone?: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    required: false,
+  })
   @IsOptional()
   @IsString()
   @MaxLength(30)
