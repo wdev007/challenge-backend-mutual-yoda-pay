@@ -6,6 +6,12 @@ export class AccountsRepositoryMock {
   private accounts: Account[] = [];
   private id = 1;
 
+  async find({ withDeleted }) {
+    if (withDeleted) return this.accounts;
+
+    return this.accounts.filter((item) => !Boolean(item.disabled_at));
+  }
+
   async createAccount(dto: CreateAccountDto) {
     const account = {
       ...dto,

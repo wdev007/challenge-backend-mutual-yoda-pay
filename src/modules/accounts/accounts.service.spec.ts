@@ -49,4 +49,27 @@ describe('AccountsService', () => {
       }
     });
   });
+
+  describe('findAll', () => {
+    it('should be able return all accounts', async () => {
+      await service.create({
+        name: 'Maria',
+        cpf: '123123111-11',
+        password: '12312311',
+        address: 'Rua 2',
+        phone: '(81) 98889-2121',
+      });
+      await service.create({
+        name: 'Tonha',
+        cpf: '123123111-12',
+        password: '12312311',
+        address: 'Rua 3',
+        phone: '(81) 98889-2121',
+      });
+
+      const response = await service.findAll({ all: true });
+
+      expect(response.length).toEqual(2);
+    });
+  });
 });
