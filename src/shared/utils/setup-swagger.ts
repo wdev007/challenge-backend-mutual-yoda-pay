@@ -1,5 +1,6 @@
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { AccountDto } from '../../modules/accounts/dto';
 
 export function setupSwagger(app: INestApplication) {
   const config = new DocumentBuilder()
@@ -14,7 +15,9 @@ export function setupSwagger(app: INestApplication) {
     )
     .build();
 
-  const document = SwaggerModule.createDocument(app, config);
+  const document = SwaggerModule.createDocument(app, config, {
+    extraModels: [AccountDto],
+  });
 
   SwaggerModule.setup('documentation', app, document);
 }
