@@ -1,0 +1,138 @@
+{
+	"variables": [],
+	"info": {
+		"name": "yoda pay",
+		"_postman_id": "fc301383-6b5b-3e12-9f41-982c99c8d0ea",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "accounts",
+			"description": "",
+			"item": [
+				{
+					"name": "get all",
+					"request": {
+						"url": {
+							"raw": "http://localhost:3333/accounts?all=false",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"accounts"
+							],
+							"query": [
+								{
+									"key": "all",
+									"value": "false",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"url": "http://localhost:3333/accounts",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"wdev007\",\n  \"cpf\": \"123123123-24\",\n  \"phone\": \"(82) 99973-7303\",\n  \"password\": \"12345678\",\n  \"address\": \"Rua B\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"url": "http://localhost:3333/accounts",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"wdev007\",\n  \"cpf\": \"123123123-24\",\n  \"phone\": \"(82) 99973-7303\",\n  \"password\": \"12345678\",\n  \"address\": \"Rua B\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "activate",
+					"request": {
+						"url": "http://localhost:3333/accounts/activate/3",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"wdev007\",\n  \"cpf\": \"123123123-24\",\n  \"phone\": \"(82) 99973-7303\",\n  \"password\": \"12345678\",\n  \"address\": \"Rua B\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "deactivate",
+					"request": {
+						"url": "http://localhost:3333/accounts/disable/3",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"wdev007\",\n  \"cpf\": \"123123123-24\",\n  \"phone\": \"(82) 99973-7303\",\n  \"password\": \"12345678\",\n  \"address\": \"Rua B\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "hello yoda pay",
+			"request": {
+				"url": "http://localhost:3333",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
