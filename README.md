@@ -13,6 +13,8 @@
 
 ### 🏠 [Homepage](https://github.com/wdev007/challenge-backend-mutual-yoda-pay)
 
+<br/>
+
 ### Built With
 
 This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
@@ -65,9 +67,17 @@ docker-compose up
 yarn run test
 ```
 
-## To see the document
+## To see the documentation
 
-- Open the address of your api in your browser, for example: localhost:3000/api
+- Open the address of your api in your browser, for example: localhost:3333/api
+
+- ### Swagger UI
+
+![Swagger UI](docs/images/swagger-ui.png)
+
+- ### Test your http requests there
+
+<br/>
 
 ## Author
 
