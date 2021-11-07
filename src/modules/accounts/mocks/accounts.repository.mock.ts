@@ -1,6 +1,7 @@
+import { CreateAccountDto } from '../dto';
 import { EnableOrDisableType } from '../accounts.repository';
-import { CreateAccountDto } from '../dto/create-account.dto';
 import { Account } from '../entities/account.entity';
+import { PageDto, PageMetaDto, PageOptionsDto } from '../../../shared/dtos';
 
 export class AccountsRepositoryMock {
   private accounts: Account[] = [];
@@ -10,6 +11,14 @@ export class AccountsRepositoryMock {
     if (withDeleted) return this.accounts;
 
     return this.accounts.filter((item) => !Boolean(item.disabled_at));
+  }
+
+  async findWhitPagination(pageOptionsDto: PageOptionsDto) {
+    const pageMetaDto = new PageMetaDto({
+      itemCount: this.accounts.length,
+      pageOptionsDto,
+    });
+    return new PageDto(this.accounts, pageMetaDto);
   }
 
   async createAccount(dto: CreateAccountDto) {

@@ -67,9 +67,9 @@ describe('AccountsService', () => {
         phone: '(81) 98889-2121',
       });
 
-      const response = await service.findAll({ all: true });
+      const response = await service.findAll({ skip: 1, page: 1 });
 
-      expect(response.length).toEqual(2);
+      expect(response.data.length).toEqual(2);
     });
   });
 });

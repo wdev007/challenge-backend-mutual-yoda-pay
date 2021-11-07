@@ -8,16 +8,13 @@ import {
   Delete,
   HttpCode,
   Query,
-  // ParseBoolPipe,
   HttpStatus,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AccountsService } from './accounts.service';
-import { CreateAccountDto } from './dto/create-account.dto';
 import { PageOptionsDto } from '../../shared/dtos/page-options.dto';
-import { UpdateAccountDto } from './dto/update-account.dto';
-import { ApiPaginatedResponse } from 'src/shared/docs/api-paginated-response';
-import { AccountDto } from './dto/account.dto';
+import { ApiPaginatedResponse } from '../../shared/decorators/api-paginated-response';
+import { AccountDto, CreateAccountDto, UpdateAccountDto } from './dto';
 
 @Controller('accounts')
 @ApiTags('Accounts')
@@ -33,7 +30,6 @@ export class AccountsController {
   @Get()
   @HttpCode(HttpStatus.OK)
   @ApiPaginatedResponse(AccountDto)
-  // @ApiQuery({ name: 'all', type: 'boolean' })
   findAll(@Query() pageOptionsDto: PageOptionsDto) {
     return this.accountsService.findAll(pageOptionsDto);
   }

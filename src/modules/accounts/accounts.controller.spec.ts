@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AccountsController } from './accounts.controller';
 import { AccountsService } from './accounts.service';
-import { Account } from './entities/account.entity';
 import { AccountsServiceMock } from './mocks/accounts.service.mock';
 
 describe('AccountsController', () => {
@@ -68,9 +67,9 @@ describe('AccountsController', () => {
         phone: '(81) 99090-9090',
       });
 
-      const response = await controller.findAll(true);
+      const response = await controller.findAll({ skip: 1, page: 1 });
 
-      expect(response.length).toEqual(2);
+      expect(response.data.length).toEqual(2);
     });
   });
 
@@ -91,58 +90,6 @@ describe('AccountsController', () => {
       });
 
       expect(response.address).toEqual(address);
-    });
-  });
-
-  describe('disable', () => {
-    it('shoulb be able disable a account', async () => {
-      let accounts: Account[] = [];
-
-      const { id } = await controller.create({
-        name: 'Jonh',
-        cpf: '123123123-11',
-        password: '12345678',
-        address: 'Rua A',
-        phone: '(81) 99090-9090',
-      });
-
-      await controller.disable(String(id));
-
-      accounts = await controller.findAll(false);
-
-      const found = accounts.find((item) => item.id === id);
-
-      expect(found).toBeUndefined();
-    });
-  });
-
-  describe('enable', () => {
-    it('shoulb be able enable a account', async () => {
-      let accounts: Account[] = [];
-      let found;
-      const { id } = await controller.create({
-        name: 'Jonh',
-        cpf: '123123123-11',
-        password: '12345678',
-        address: 'Rua A',
-        phone: '(81) 99090-9090',
-      });
-
-      await controller.disable(String(id));
-
-      accounts = await controller.findAll(false);
-
-      found = accounts.find((item) => item.id === id);
-
-      expect(found).toBeUndefined();
-
-      await controller.enable(String(id));
-
-      accounts = await controller.findAll(false);
-
-      found = accounts.find((item) => item.id === id);
-
-      expect(found.disabled_at).toBeNull();
     });
   });
 });
