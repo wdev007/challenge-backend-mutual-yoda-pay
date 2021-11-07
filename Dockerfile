@@ -1,15 +1,28 @@
-FROM node:12-alpine3.10
+FROM node:latest AS development
 
-# RUN npm install -g yarn
+WORKDIR /usr/src/app
 
-WORKDIR /app
+COPY package*.json ./
 
-COPY ./package.json /app/
+RUN npm install
 
-RUN ["yarn", "install"]
+COPY . .
 
-COPY . /app/
+RUN npm run build
 
-EXPOSE ${APP_PORT}
+FROM node:12.19.0-alpine3.9 as production
 
-CMD ["yarn", "start:debug"]
+ARG NODE_ENV=production
+ENV NODE_ENV=${NODE_ENV}
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+RUN npm install --only=production
+
+COPY . .
+
+COPY --from=development /usr/src/app/dist ./dist
+
+CMD ["node", "dist/main"]
