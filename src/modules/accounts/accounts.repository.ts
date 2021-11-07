@@ -1,6 +1,7 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { EntityRepository, Repository } from 'typeorm';
 import { CreateAccountDto } from './dto/create-account.dto';
+import { UpdateAccountDto } from './dto/update-account.dto';
 import { Account } from './entities/account.entity';
 
 export type EnableOrDisableType = 'enable' | 'disable';
@@ -23,6 +24,20 @@ export class AccountsRepository extends Repository<Account> {
     await this.save(accountCreated);
 
     return accountCreated;
+  }
+
+  async updateAccount(id: number, dto: UpdateAccountDto) {
+    const found = await this.findOne(id);
+
+    if (!found) {
+      throw new HttpException('Account does not exist', HttpStatus.NOT_FOUND);
+    }
+
+    const accountToSave = this.create(Object.assign(found, dto));
+
+    await this.save(accountToSave);
+
+    return accountToSave;
   }
 
   async enableOrDisable(id: number, type: EnableOrDisableType) {

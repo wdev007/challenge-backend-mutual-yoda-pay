@@ -8,11 +8,11 @@ import { FiltersGetAccounts } from './interfaces/filters-get-accounts';
 export class AccountsService {
   constructor(private readonly accountRepository: AccountsRepository) {}
 
-  create(createAccountDto: CreateAccountDto) {
+  async create(createAccountDto: CreateAccountDto) {
     return this.accountRepository.createAccount(createAccountDto);
   }
 
-  findAll(filters: FiltersGetAccounts) {
+  async findAll(filters: FiltersGetAccounts) {
     const { all: withDeleted } = filters;
 
     return this.accountRepository.find({
@@ -20,15 +20,15 @@ export class AccountsService {
     });
   }
 
-  update(id: number, updateAccountDto: UpdateAccountDto) {
-    return this.accountRepository.update(id, updateAccountDto);
+  async update(id: number, updateAccountDto: UpdateAccountDto) {
+    return this.accountRepository.updateAccount(id, updateAccountDto);
   }
 
-  enable(id: number) {
+  async enable(id: number) {
     return this.accountRepository.enableOrDisable(id, 'enable');
   }
 
-  disable(id: number) {
+  async disable(id: number) {
     return this.accountRepository.enableOrDisable(id, 'disable');
   }
 }

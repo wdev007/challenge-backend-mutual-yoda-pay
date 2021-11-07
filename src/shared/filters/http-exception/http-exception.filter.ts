@@ -14,6 +14,14 @@ export class HttpExceptionFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
+
+    if (!(exception instanceof HttpException)) {
+      this.logger.error('ocorreu um erro inesperado!', exception);
+      return response.status(500).json({
+        message: 'Internal server error',
+      });
+    }
+
     const status = exception.getStatus();
     const message = exception.getResponse();
 

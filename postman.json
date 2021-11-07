@@ -15,19 +15,17 @@
 					"name": "get all",
 					"request": {
 						"url": {
-							"raw": "http://localhost:3333/accounts?all=false",
-							"protocol": "http",
+							"raw": "{{base_url}}/accounts?all=true",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "3333",
 							"path": [
 								"accounts"
 							],
 							"query": [
 								{
 									"key": "all",
-									"value": "false",
+									"value": "true",
 									"equals": true,
 									"description": ""
 								}
@@ -44,7 +42,7 @@
 				{
 					"name": "create",
 					"request": {
-						"url": "http://localhost:3333/accounts",
+						"url": "{{base_url}}/accounts",
 						"method": "POST",
 						"header": [
 							{
@@ -55,7 +53,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"wdev007\",\n  \"cpf\": \"123123123-24\",\n  \"phone\": \"(82) 99973-7303\",\n  \"password\": \"12345678\",\n  \"address\": \"Rua B\"\n}"
+							"raw": "{\n  \"name\": \"wdev009\",\n  \"cpf\": \"123123123-29\",\n  \"phone\": \"(82) 99973-7309\",\n  \"password\": \"12345675\",\n  \"address\": \"Rua V\"\n}"
 						},
 						"description": ""
 					},
@@ -64,8 +62,8 @@
 				{
 					"name": "update",
 					"request": {
-						"url": "http://localhost:3333/accounts",
-						"method": "PUT",
+						"url": "{{base_url}}/accounts/3",
+						"method": "PATCH",
 						"header": [
 							{
 								"key": "Content-Type",
@@ -75,16 +73,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"wdev007\",\n  \"cpf\": \"123123123-24\",\n  \"phone\": \"(82) 99973-7303\",\n  \"password\": \"12345678\",\n  \"address\": \"Rua B\"\n}"
+							"raw": "{\n\t\"address\": \"Rua W\",\n\t\"phone\": \"(82) 99978-7809\"\n}"
 						},
 						"description": ""
 					},
 					"response": []
 				},
 				{
-					"name": "activate",
+					"name": "enable account",
 					"request": {
-						"url": "http://localhost:3333/accounts/activate/3",
+						"url": "{{base_url}}/accounts/enable/6",
 						"method": "POST",
 						"header": [
 							{
@@ -102,9 +100,9 @@
 					"response": []
 				},
 				{
-					"name": "deactivate",
+					"name": "disable account",
 					"request": {
-						"url": "http://localhost:3333/accounts/disable/3",
+						"url": "{{base_url}}/accounts/disable/3",
 						"method": "DELETE",
 						"header": [
 							{
