@@ -1,6 +1,9 @@
 <h1 align="center">Welcome to Yoda Pay API 👋</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-0.0.1-blue.svg?cacheSeconds=2592000" />
+  <a href="https://github.com/wdev007/challenge-backend-mutual-yoda-pay/actions/workflows/main.yml" target="_blank">
+    <img alt="GitHub Actions" src="https://github.com/wdev007/challenge-backend-mutual-yoda-pay/actions/workflows/main.yml/badge.svg" />
+  </a>
   <a href="https://mit-license.org" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
   </a>
