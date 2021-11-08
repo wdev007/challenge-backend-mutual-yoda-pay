@@ -29,7 +29,7 @@ export class AccountsService {
     const account = await this.accountRepository.findOne(id);
 
     if (!account) {
-      throw new HttpException('Account does not exist', HttpStatus.NOT_FOUND);
+      throw new HttpException('Account does not exists', HttpStatus.NOT_FOUND);
     }
 
     return this.accountRepository.updateAccount(account, dto);
@@ -39,7 +39,7 @@ export class AccountsService {
     const found = await this.accountRepository.findWithDeleted(id);
 
     if (!found) {
-      throw new HttpException('Account does not exist', HttpStatus.NOT_FOUND);
+      throw new HttpException('Account does not exists', HttpStatus.NOT_FOUND);
     }
 
     if (!found.disabled_at) {
@@ -56,7 +56,7 @@ export class AccountsService {
     const found = await this.accountRepository.findWithDeleted(id);
 
     if (!found) {
-      throw new HttpException('Account does not exist', HttpStatus.NOT_FOUND);
+      throw new HttpException('Account does not exists', HttpStatus.NOT_FOUND);
     }
 
     if (found.disabled_at) {
