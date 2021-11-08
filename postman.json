@@ -15,11 +15,12 @@
 					"name": "get all",
 					"request": {
 						"url": {
-							"raw": "{{base_url}}/accounts?order=ASC&page=1&take=10",
+							"raw": "{{base_url}}/v1/accounts?order=ASC&page=1&take=10",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
+								"v1",
 								"accounts"
 							],
 							"query": [
@@ -54,7 +55,7 @@
 				{
 					"name": "create",
 					"request": {
-						"url": "{{base_url}}/accounts",
+						"url": "{{base_url}}/v1/accounts",
 						"method": "POST",
 						"header": [
 							{
@@ -65,7 +66,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"wdev009\",\n  \"cpf\": \"123123123-29\",\n  \"phone\": \"(82) 99973-7309\",\n  \"password\": \"12345675\",\n  \"address\": \"Rua V\"\n}"
+							"raw": "{\n  \"name\": \"wdev004\",\n  \"cpf\": \"123123123-24\",\n  \"phone\": \"(82) 99973-7309\",\n  \"password\": \"12345675\",\n  \"address\": \"Rua A\"\n}"
 						},
 						"description": ""
 					},
@@ -74,7 +75,7 @@
 				{
 					"name": "update",
 					"request": {
-						"url": "{{base_url}}/accounts/3",
+						"url": "{{base_url}}/v1/accounts/8",
 						"method": "PATCH",
 						"header": [
 							{
@@ -85,7 +86,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"address\": \"Rua W\",\n\t\"phone\": \"(82) 99978-7809\"\n}"
+							"raw": "{\n\t\"address\": \"Rua LLL\",\n\t\"phone\": \"(82) 99988-7801\"\n}"
 						},
 						"description": ""
 					},
@@ -94,7 +95,7 @@
 				{
 					"name": "enable account",
 					"request": {
-						"url": "{{base_url}}/accounts/enables/6",
+						"url": "{{base_url}}/v1/accounts/enables/5",
 						"method": "POST",
 						"header": [
 							{
@@ -114,7 +115,7 @@
 				{
 					"name": "disable account",
 					"request": {
-						"url": "{{base_url}}/accounts/disables/3",
+						"url": "{{base_url}}/v1/accounts/disables/5",
 						"method": "DELETE",
 						"header": [
 							{
@@ -136,7 +137,7 @@
 		{
 			"name": "hello yoda pay",
 			"request": {
-				"url": "http://localhost:3333",
+				"url": "{{base_url}}/v1",
 				"method": "GET",
 				"header": [],
 				"body": {},
