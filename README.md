@@ -47,13 +47,19 @@ List things you need to use the software and how to install them.
 
 ## Installation
 
-1 - Clone the repo
+1 - clone the repo
 
 ```sh
-git clone https://github.com/wdev007/challenge-backend-mutual-yoda-pay
+git clone https://github.com/wdev007/challenge-backend-mutual-yoda-pay.git
 ```
 
-2 - Change the settings files
+2 - enter the repository directory
+
+```sh
+cd challenge-backend-mutual-yoda-pay
+```
+
+3 - change the settings files
 
 ```sh
 cp .env.example .env
@@ -71,6 +77,10 @@ docker-compose up
 
 ```sh
 docker-compose exec api sh
+```
+ - or
+```bash
+docker-compose exec api bash
 ```
 
 2 - run migrations
