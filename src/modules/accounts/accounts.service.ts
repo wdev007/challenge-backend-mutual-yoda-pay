@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { AccountsRepository } from './accounts.repository';
 import { PageOptionsDto } from '../../shared/dtos/page-options.dto';
 import { CreateAccountDto, UpdateAccountDto } from './dto';
+import { EnableOrDisableType } from './types/enable-or-disable-type';
 
 @Injectable()
 export class AccountsService {
@@ -36,35 +37,34 @@ export class AccountsService {
   }
 
   async enable(id: number) {
+    return this.enableOrDisable(id, 'enable');
+  }
+
+  async disable(id: number) {
+    return this.enableOrDisable(id, 'disable');
+  }
+
+  async enableOrDisable(id: number, type: EnableOrDisableType) {
     const found = await this.accountRepository.findWithDeleted(id);
 
     if (!found) {
       throw new HttpException('Account does not exists', HttpStatus.NOT_FOUND);
     }
 
-    if (!found.disabled_at) {
+    if (type === 'disable' && found.disabled_at) {
+      throw new HttpException(
+        'Account is already disable',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    if (type === 'enable' && !found.disabled_at) {
       throw new HttpException(
         'Account is already enable',
         HttpStatus.BAD_REQUEST,
       );
     }
 
-    return this.accountRepository.enableOrDisable(found, 'enable');
-  }
-
-  async disable(id: number) {
-    const found = await this.accountRepository.findWithDeleted(id);
-
-    if (!found) {
-      throw new HttpException('Account does not exists', HttpStatus.NOT_FOUND);
-    }
-
-    if (found.disabled_at) {
-      throw new HttpException(
-        'Account is already disable',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-    return this.accountRepository.enableOrDisable(found, 'disable');
+    return this.accountRepository.enableOrDisable(found, type);
   }
 }

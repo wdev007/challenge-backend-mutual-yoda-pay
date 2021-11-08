@@ -5,8 +5,7 @@ import { PageOptionsDto } from '../../shared/dtos/page-options.dto';
 import { PageDto } from '../../shared/dtos/page.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
 import { Account } from './entities/account.entity';
-
-export type EnableOrDisableType = 'enable' | 'disable';
+import { EnableOrDisableType } from './types/enable-or-disable-type';
 
 @EntityRepository(Account)
 export class AccountsRepository extends Repository<Account> {
