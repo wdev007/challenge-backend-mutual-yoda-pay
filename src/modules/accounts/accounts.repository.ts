@@ -1,4 +1,3 @@
-import { HttpException, HttpStatus } from '@nestjs/common';
 import { EntityRepository, Repository } from 'typeorm';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { PageMetaDto } from '../../shared/dtos/page-meta.dto';
@@ -11,6 +10,10 @@ export type EnableOrDisableType = 'enable' | 'disable';
 
 @EntityRepository(Account)
 export class AccountsRepository extends Repository<Account> {
+  async findWithDeleted(id: number) {
+    return this.findOne(id, { withDeleted: true });
+  }
+
   async findWhitPagination(pageOptionsDto: PageOptionsDto) {
     const queryBuilder = this.createQueryBuilder('account');
 
@@ -27,62 +30,24 @@ export class AccountsRepository extends Repository<Account> {
     return new PageDto(entities, pageMetaDto);
   }
   async createAccount(account: CreateAccountDto) {
-    const found = await this.findOne({
-      where: {
-        cpf: account.cpf,
-      },
-    });
+    const accountToCreate = this.create(account);
 
-    if (found) {
-      throw new HttpException('Account already exists', HttpStatus.BAD_REQUEST);
-    }
+    await this.save(accountToCreate);
 
-    const accountCreated = this.create(account);
-
-    await this.save(accountCreated);
-
-    return accountCreated;
+    return accountToCreate;
   }
 
-  async updateAccount(id: number, dto: UpdateAccountDto) {
-    const found = await this.findOne(id);
+  async updateAccount(account: Account, dto: UpdateAccountDto) {
+    const accountToUpadate = this.create(Object.assign(account, dto));
 
-    if (!found) {
-      throw new HttpException('Account does not exist', HttpStatus.NOT_FOUND);
-    }
+    await this.save(accountToUpadate);
 
-    const accountToSave = this.create(Object.assign(found, dto));
-
-    await this.save(accountToSave);
-
-    return accountToSave;
+    return accountToUpadate;
   }
 
-  async enableOrDisable(id: number, type: EnableOrDisableType) {
-    const found = await this.findOne(id, {
-      withDeleted: true,
-    });
-
-    if (!found) {
-      throw new HttpException('Account does not exist', HttpStatus.NOT_FOUND);
-    }
-
-    if (type === 'enable' && !found.disabled_at) {
-      throw new HttpException(
-        'Account is already active',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-
-    if (type === 'disable' && found.disabled_at) {
-      throw new HttpException(
-        'Account is already disabled',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-
+  async enableOrDisable(account: Account, type: EnableOrDisableType) {
     const accountToSave = this.create(
-      Object.assign(found, {
+      Object.assign(account, {
         disabled_at: type === 'enable' ? null : new Date(),
       }),
     );
