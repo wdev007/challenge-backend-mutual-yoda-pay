@@ -1,7 +1,7 @@
 import { CreateAccountDto, UpdateAccountDto } from '../dto';
-import { EnableOrDisableType } from '../accounts.repository';
 import { Account } from '../entities/account.entity';
 import { PageDto, PageMetaDto, PageOptionsDto } from '../../../shared/dtos';
+import { EnableOrDisableType } from '../types/enable-or-disable-type';
 
 interface IFindOne {
   where: {
