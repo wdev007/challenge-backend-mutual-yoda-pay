@@ -30,16 +30,14 @@ describe('AccountsService', () => {
         disabled_at: new Date().toString(),
       };
       jest.spyOn(repository, 'create').mockImplementation(() => account);
-      jest
+      const saveSpy = jest
         .spyOn(repository, 'save')
         .mockImplementation(() => Promise.resolve(account));
-      const findOneSpy = jest
-        .spyOn(repository, 'findOne')
-        .mockResolvedValue(account);
-      const response = await repository.enableOrDisable(1, 'enable');
+
+      const response = await repository.enableOrDisable(account, 'enable');
 
       expect(response.disabled_at).toBeNull();
-      expect(findOneSpy).toHaveBeenCalledWith(1, { withDeleted: true });
+      expect(saveSpy).toHaveBeenCalledWith(account);
     });
 
     it('should be able disable a account', async () => {
@@ -54,16 +52,14 @@ describe('AccountsService', () => {
         disabled_at: null,
       };
       jest.spyOn(repository, 'create').mockImplementation(() => account);
-      jest
+      const saveSpy = jest
         .spyOn(repository, 'save')
         .mockImplementation(() => Promise.resolve(account));
-      const findOneSpy = jest
-        .spyOn(repository, 'findOne')
-        .mockResolvedValue(account);
-      const response = await repository.enableOrDisable(1, 'disable');
+
+      const response = await repository.enableOrDisable(account, 'disable');
 
       expect(response.disabled_at).toBeTruthy();
-      expect(findOneSpy).toHaveBeenCalledWith(1, { withDeleted: true });
+      expect(saveSpy).toHaveBeenCalledWith(account);
     });
   });
 });

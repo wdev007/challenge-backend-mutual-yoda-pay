@@ -1,7 +1,13 @@
-import { CreateAccountDto } from '../dto';
+import { CreateAccountDto, UpdateAccountDto } from '../dto';
 import { EnableOrDisableType } from '../accounts.repository';
 import { Account } from '../entities/account.entity';
 import { PageDto, PageMetaDto, PageOptionsDto } from '../../../shared/dtos';
+
+interface IFindOne {
+  where: {
+    cpf: string;
+  };
+}
 
 export class AccountsRepositoryMock {
   private accounts: Account[] = [];
@@ -11,6 +17,29 @@ export class AccountsRepositoryMock {
     if (withDeleted) return this.accounts;
 
     return this.accounts.filter((item) => !Boolean(item.disabled_at));
+  }
+
+  async findOne(isOrparams: IFindOne | number) {
+    if (typeof isOrparams === 'number') {
+      return this.accounts.find((item) => item.id === isOrparams);
+    }
+    return this.accounts.find((item) => item.cpf === isOrparams?.where.cpf);
+  }
+  async findWithDeleted(id: number) {
+    return this.accounts.find((item) => item.id === id);
+  }
+
+  async updateAccount(account: Account, dto: UpdateAccountDto) {
+    let accountUpdate;
+    this.accounts = this.accounts.map((item) => {
+      if (item.id === account.id) {
+        accountUpdate = Object.assign(account, dto);
+        return accountUpdate;
+      }
+      return item;
+    });
+
+    return accountUpdate;
   }
 
   async findWhitPagination(pageOptionsDto: PageOptionsDto) {
@@ -37,23 +66,18 @@ export class AccountsRepositoryMock {
 
     return account;
   }
-  async enableOrDisable(id: number, type: EnableOrDisableType) {
-    const found = this.accounts.find((item) => item.id === id);
-
-    if (!found) return;
-
-    const disabled_at = type === 'enable' ? null : new Date().toString();
+  async enableOrDisable(account: Account, type: EnableOrDisableType) {
+    const accountToSave = Object.assign(account, {
+      disabled_at: type === 'enable' ? null : new Date(),
+    });
 
     this.accounts = this.accounts.map((item) => {
-      if (item.id === id) {
-        return {
-          ...item,
-          disabled_at,
-        };
+      if (item.id === account.id) {
+        return accountToSave;
       }
       return item;
     });
 
-    return Object.assign(found, { disabled_at });
+    return accountToSave;
   }
 }
